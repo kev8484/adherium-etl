@@ -2,11 +2,19 @@ import csv
 from io import FileIO
 from datetime import datetime
 import pysftp
+from config import Config
+
+
+config = Config()
 
 
 def get_file(remote_dir, fname):
     # connect
-    with pysftp.Connection(host=, username=, password=,) as sftp:
+    with pysftp.Connection(
+        host=config.SFTP_HOSTNAME,
+        username=config.SFTP_USERNAME,
+        password=config.SFTP_PASSWORD,
+    ) as sftp:
         logging.debug(f"Connection to {} successfully established.")
         # get file
         fo = FileIO()

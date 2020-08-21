@@ -12,3 +12,4 @@ class Config:
     SFTP_HOSTNAME = os.environ.get('SFTP_HOSTNAME')
     SFTP_USERNAME = os.environ.get('SFTP_USERNAME')
     SFTP_PASSWORD = os.environ.get('SFTP_PASSWORD')
+    SFTP_HOSTKEY = os.environ.get('SFTP_HOSTKEY')

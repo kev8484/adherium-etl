@@ -58,7 +58,7 @@ def process_file(fo):
                     "Usage Count": usage_count,
                     "Overusage": overusage
                 })
-
+    # fo.close()  # close input stream buffer
     logger.debug(f"{len(rows)} rows of data found.")
     output = StringIO()
     writer = csv.DictWriter(
@@ -70,3 +70,22 @@ def process_file(fo):
         writer.writerow(row)
 
     return output
+
+
+def put_file(fo, remote_dir, fname, cleanup_path=None):
+    # connect
+    with pysftp.Connection(
+        host=config.SFTP_HOSTNAME,
+        username=config.SFTP_USERNAME,
+        password=config.SFTP_PASSWORD,
+    ) as sftp:
+        # put file
+        with sftp.cd(remote_dir):
+            fo.seek(0)
+            sftp.putfo(fo, remotepath=fname)
+            logger.debug(f"Uploaded {fname}.")
+
+        # clean up INBOUND directory
+        if cleanup_path is not None and sftp.isfile(cleanup_path):
+            sftp.remove(cleanup_path)
+            logger.debug(f"Removed file {cleanup_path}.")

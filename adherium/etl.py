@@ -60,5 +60,13 @@ def process_file(fo):
                 })
 
     logger.debug(f"{len(rows)} rows of data found.")
-    print(f"{len(rows)} rows of data found.")
-    return rows
+    output = StringIO()
+    writer = csv.DictWriter(
+        output,
+        fieldnames=['System ID', 'Medication', 'Usage Count', 'Overusage']
+    )
+    writer.writeheader()
+    for row in rows:
+        writer.writerow(row)
+
+    return output

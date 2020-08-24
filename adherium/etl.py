@@ -35,14 +35,6 @@ def get_file(remote_dir, fname):
         return fo.getvalue()  # return byte string
 
 
-def configure_hostkey(hostname, hostkey):
-    keydata = str.encode(hostkey)
-    key = paramiko.RSAKey(data=decodebytes(keydata))
-    cnopts = pysftp.CnOpts()
-    cnopts.hostkeys.add(hostname, 'ssh-rsa', key)
-    return cnopts
-
-
 def process_file(fo):
     rows = []
     with StringIO(fo.decode()) as csvfile:

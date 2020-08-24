@@ -1,14 +1,38 @@
 """ Entrypoint for Adherium ETL
 """
 import logging
+import argparse
 from adherium.etl import get_file, process_file, put_file
 
 
-def main():
+def parse_args(args):
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-f",  help="file name to process", default=None,
+    )
+    parser.add_argument(
+        "-c", action="store_true", help="clean directory after processing"
+    )
+    parser.add_argument(
+        "-p", action="store_true", help="print logs to console, otherwise write to file"
+    )
+    parser.add_argument(
+        "--log",  help="log level", default="WARNING",
+    )
+    return parser.parse(args)
+
+def main(args):
+
+    args = parse_args(args)
+    log_level = args.log
+    if log_level.upper() not in ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]:
+        raise ValueError(f"{log_level} not supported.")
+
     logging.basicConfig(
-        filename="adherium.log",
+
+        filename=None if args.p else "adherium.log",
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-        # level=logging.DEBUG,
+        level=getattr(logging, log_level.upper()),
     )
 
     fo = get_file(remote_dir="INBOUND",

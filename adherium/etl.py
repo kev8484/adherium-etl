@@ -24,14 +24,11 @@ def get_file(remote_dir, fname):
         logger.debug(
             f"Connection to {config.SFTP_HOSTNAME} successfully established."
         )
-        print(
-            f"Connection to {config.SFTP_HOSTNAME} successfully established.")
         # get file
         fo = BytesIO()
         # fname = f"{datetime.today().strftime('%Y-%m-%d')}_DailyMedicationUsage.csv"
         sftp.getfo(f"{remote_dir}/{fname}", fo)
         logger.debug(f"Retrieved {fname}.")
-        print(f"Retrieved {fname}.")
         return fo.getvalue()  # return byte string
 
 
@@ -89,3 +86,6 @@ def put_file(fo, remote_dir, fname, cleanup_path=None):
         if cleanup_path is not None and sftp.isfile(cleanup_path):
             sftp.remove(cleanup_path)
             logger.debug(f"Removed file {cleanup_path}.")
+
+
+def

@@ -1,10 +1,7 @@
 import logging
 import csv
-from base64 import decodebytes
 from io import BytesIO, StringIO
-from datetime import datetime
 
-import paramiko
 import pysftp
 
 from config import Config
@@ -86,6 +83,3 @@ def put_file(fo, remote_dir, fname, cleanup_path=None):
         if cleanup_path is not None and sftp.isfile(cleanup_path):
             sftp.remove(cleanup_path)
             logger.debug(f"Removed file {cleanup_path}.")
-
-
-def

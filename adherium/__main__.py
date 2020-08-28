@@ -9,7 +9,7 @@ from adherium.etl import get_file, process_file, put_file
 def parse_args(args):
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-f",  help="file name to process", default=None,
+        "-f", help="file name to process", default=None,
     )
     parser.add_argument(
         "-c", action="store_true", help="clean directory after processing"
@@ -18,7 +18,7 @@ def parse_args(args):
         "-p", action="store_true", help="print logs to console, otherwise write to file"
     )
     parser.add_argument(
-        "--log",  help="log level", default="WARNING",
+        "--log", help="log level", default="WARNING",
     )
     parser.add_argument(
         "-w", action="store_true", help="write processed file to local disk, do not upload"
